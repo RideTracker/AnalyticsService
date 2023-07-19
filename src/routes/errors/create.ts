@@ -56,12 +56,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
 
         const existingAlarm = await getAlarm(env.DATABASE, error, data, service, environment, timestamp);
 
-        const token = await getDiscordToken(env);
+        //const token = await getDiscordToken(env);
 
         if(!existingAlarm) {
             const alarm = await createAlarm(env.DATABASE, error, data, service, environment);
 
-            const message = await createDiscordMessage(token, env.DISCORD_CHANNEL_ID, {
+            const message = await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, env.DISCORD_CHANNEL_ID, {
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Alarm`,
@@ -77,11 +77,11 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                 ]
             });
 
-            const thread = await createDiscordThread(token, message.channel_id, message.id, getFormattedError(item.name));
+            const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, getFormattedError(item.name));
 
-            await addDiscordThreadMember(token, thread.id, env.DISCORD_USER_ID);
+            await addDiscordThreadMember(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, env.DISCORD_USER_ID);
 
-            await createDiscordMessage(token, thread.id, {
+            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, {
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Payload`,
@@ -100,7 +100,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
         else {
             await setAlarmEnded(env.DATABASE, existingAlarm.id, Date.now());
 
-            await createDiscordMessage(token, existingAlarm.threadId, {
+            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, existingAlarm.threadId, {
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Payload`,
