@@ -25,6 +25,7 @@ export default async function withAuth(request: RequestWithKey, env: Env, contex
                 id: token.id,
                 key: token.key,
                 user: "",
+                email: "",
                 timestamp: token.timestamp
             };
 

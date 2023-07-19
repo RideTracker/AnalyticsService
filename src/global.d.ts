@@ -1,3 +1,5 @@
+import { Token } from "./models/Token";
+
 declare global {
     interface Env {
         [key: string]: string | undefined;
