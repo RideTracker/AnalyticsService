@@ -66,16 +66,16 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Alarm`,
+                        url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`,
                         description: alarm.data,
                         type: "rich",
                         color: 15105570,
                         author: {
                             name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png",
-                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`
+                            icon_url: "https://ridetracker.app/logo192.png"
                         },
                         footer: {
-                            text: `Alarm ${alarm.id}`
+                            text: `Alarm \`${alarm.id}\``
                         },
                         timestamp: new Date(alarm.started).toISOString()
                     }
@@ -84,7 +84,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
 
             console.log({ message });
 
-            const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, getFormattedError(item.name));
+            const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, `Alarm ${alarm.id}`);
             
             console.log({ thread });
 
@@ -96,16 +96,16 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Payload`,
+                        url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`,
                         description: "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
                         author: {
                             name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png",
-                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`
+                            icon_url: "https://ridetracker.app/logo192.png"
                         },
                         footer: {
-                            text: `Error ${errorId}`
+                            text: `Error \`${errorId}\``
                         },
                         timestamp: new Date().toISOString()
                     }
@@ -119,16 +119,16 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                 embeds: [
                     {
                         title: `${getFormattedError(item.name)} Payload`,
+                        url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`,
                         description: "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
                         author: {
                             name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png",
-                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`
+                            icon_url: "https://ridetracker.app/logo192.png"
                         },
                         footer: {
-                            text: `Error ${errorId}`
+                            text: `Error \`${errorId}\``
                         },
                         timestamp: new Date().toISOString()
                     }
