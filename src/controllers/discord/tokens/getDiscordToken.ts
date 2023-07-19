@@ -1,6 +1,6 @@
 export default async function getDiscordToken(env: Env) {
     const authentication = `${env.DISCORD_BOT_CLIENT_ID}:${env.DISCORD_BOT_CLIENT_TOKEN}`;
-    const base64AuthString = Buffer.from(authentication, "base64");
+    const base64AuthString = Buffer.from(authentication, "base64url");
 
     const response = await fetch("https://discord.com/api/v9/oauth2/token", {
         method: "POST",
