@@ -37,4 +37,4 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_WORKERS_TOKEN }}
-          command: publish --env ${{ inputs.environment }} --var GITHUB_SHA:${{ github.sha }} DISCORD_BOT_CLIENT_ID:${{ secrets.DISCORD_BOT_CLIENT_ID }} DISCORD_BOT_CLIENT_TOKEN:${{ secrets.DISCORD_BOT_CLIENT_TOKEN }} DISCORD_CHANNEL_ID:${{ vars.DISCORD_CHANNEL_ID }} DISCORD_USER_ID:${{ secrets.DISCORD_USER_ID }}
+          command: publish --env ${{ inputs.environment }} --var GITHUB_SHA:${{ github.sha }} DISCORD_BOT_CLIENT_ID:${{ secrets.DISCORD_BOT_CLIENT_ID }} DISCORD_BOT_CLIENT_TOKEN:${{ secrets.DISCORD_BOT_CLIENT_TOKEN }} DISCORD_CHANNEL_ID:${{ vars.DISCORD_CHANNEL_ID }} DISCORD_USER_ID:${{ vars.DISCORD_USER_ID }}
