@@ -70,12 +70,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 15105570,
                         author: {
-                            name: `Alarm ${alarm.id}`,
+                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            icon_url: "https://ridetracker.app/logo192.png",
                             url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`
                         },
                         footer: {
-                            icon_url: "https://ridetracker.app/logo192.png",
-                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
+                            text: `Alarm ${alarm.id}`
                         },
                         timestamp: new Date(alarm.started).toISOString()
                     }
@@ -100,12 +100,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
+                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
                             icon_url: "https://ridetracker.app/logo192.png",
-                            name: `Error ${errorId}`,
                             url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`
                         },
                         footer: {
-                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
+                            text: `Error ${errorId}`
                         },
                         timestamp: new Date().toISOString()
                     }
@@ -123,12 +123,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: `Error ${errorId}`,
+                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            icon_url: "https://ridetracker.app/logo192.png",
                             url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`
                         },
                         footer: {
-                            icon_url: "https://ridetracker.app/logo192.png",
-                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
+                            text: `Error ${errorId}`
                         },
                         timestamp: new Date().toISOString()
                     }
