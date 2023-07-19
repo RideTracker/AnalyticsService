@@ -3,6 +3,7 @@ import createAlarm from "../../controllers/alarms/createAlarm";
 import getAlarm from "../../controllers/alarms/getAlarm";
 import getAlarms from "../../controllers/alarms/getAlarms";
 import setAlarmEnded from "../../controllers/alarms/setAlarmEnded";
+import setAlarmThreadId from "../../controllers/alarms/setAlarmThreadId";
 import createDiscordMessage from "../../controllers/discord/messages/createDiscordMessage";
 import addDiscordThreadMember from "../../controllers/discord/threads/addDiscordThreadMember";
 import createDiscordThread from "../../controllers/discord/threads/createDiscordThread";
@@ -80,8 +81,10 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
             console.log({ message });
 
             const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, getFormattedError(item.name));
-
+            
             console.log({ thread });
+
+            await setAlarmThreadId(env.DATABASE, alarm.id, thread.id);
 
             await addDiscordThreadMember(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, env.DISCORD_USER_ID);
 
@@ -93,8 +96,11 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            name: service,
                             icon_url: "https://ridetracker.app/logo192.png"
+                        },
+                        footer: {
+                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
                         },
                         timestamp: new Date().toISOString()
                     }
@@ -112,8 +118,11 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            name: service,
                             icon_url: "https://ridetracker.app/logo192.png"
+                        },
+                        footer: {
+                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
                         },
                         timestamp: new Date().toISOString()
                     }
