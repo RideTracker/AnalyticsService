@@ -123,9 +123,9 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: `Alarm ${alarm.id} • Error ${errorId}`,
+                            name: `Alarm ${existingAlarm.id} • Error ${errorId}`,
                             icon_url: "https://ridetracker.app/logo192.png",
-                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`
+                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`
                         },
                         footer: {
                             text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
