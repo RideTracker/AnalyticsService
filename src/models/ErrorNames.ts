@@ -1,0 +1,6 @@
+export type ErrorNames =
+    "ACTIVITY_PROCESSING_ERROR" |
+    "INVALID_USER_AGENT_ERROR" |
+    "SERVER_ERROR" |
+    "D1_ERROR" |
+    "UNKNOWN_ERROR";
