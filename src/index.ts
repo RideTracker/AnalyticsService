@@ -48,14 +48,18 @@ export const errors: ErrorAlarm[] = [
 
 export default {
     async fetch(request: Request, env: Env, context: ExecutionContext) {
-        const response = await router.handle(request, env, context);
+        let response = await router.handle(request, env, context);
 
         if(!response) {
-            return new Response(undefined, {
+            response = new Response(undefined, {
                 status: 404,
                 statusText: "File Not Found"
-            })
+            });
         }
+
+        response.headers.set("Access-Control-Allow-Origin", "*");
+        response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+        response.headers.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
         return response;
     }
