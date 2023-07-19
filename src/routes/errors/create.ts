@@ -70,8 +70,8 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         description: `## ${getFormattedError(item.name)} Alarm\n` + alarm.data,
                         type: "rich",
                         color: 15105570,
-                        author: {
-                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                        footer: {
+                            text: `${service} • ${getFormattedEnvironment(environment)} Environment`,
                             icon_url: "https://ridetracker.app/logo192.png"
                         },
                         timestamp: new Date(alarm.started).toISOString()
@@ -97,8 +97,8 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
-                        author: {
-                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                        footer: {
+                            text: `${service} • ${getFormattedEnvironment(environment)} Environment`,
                             icon_url: "https://ridetracker.app/logo192.png"
                         },
                         timestamp: new Date().toISOString()
