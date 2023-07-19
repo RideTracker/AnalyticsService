@@ -45,7 +45,7 @@ export const createErrorSchema = {
 export default async function handleCreateErrorRequest(request: RequestWithKey, env: Env, context: ExecutionContext): Promise<Response> {
     const { error, data, service, environment, payload } = request.content;
 
-    await createError(env.DATABASE, error, data, service, environment, payload);
+    const errorId = await createError(env.DATABASE, error, data, service, environment, payload);
 
     context.waitUntil(Promise.all(errors.filter((item) => item.name === error).map(async (item) => {
         const timestamp = Date.now() - item.duration;
@@ -70,8 +70,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 15105570,
                         author: {
-                            name: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png"
+                            name: `Alarm ${alarm.id}`,
+                            icon_url: "https://ridetracker.app/logo192.png",
+                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`
+                        },
+                        footer: {
+                            text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
                         },
                         timestamp: new Date(alarm.started).toISOString()
                     }
@@ -96,8 +100,9 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: service,
-                            icon_url: "https://ridetracker.app/logo192.png"
+                            name: `Alarm ${alarm.id} • Error ${errorId}`,
+                            icon_url: "https://ridetracker.app/logo192.png",
+                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`
                         },
                         footer: {
                             text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
@@ -118,8 +123,9 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                         type: "rich",
                         color: 10038562,
                         author: {
-                            name: service,
-                            icon_url: "https://ridetracker.app/logo192.png"
+                            name: `Alarm ${alarm.id} • Error ${errorId}`,
+                            icon_url: "https://ridetracker.app/logo192.png",
+                            url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`
                         },
                         footer: {
                             text: `Triggered automatically by ${service} • ${getFormattedEnvironment(environment)} Environment`
