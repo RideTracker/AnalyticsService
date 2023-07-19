@@ -65,17 +65,14 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
             const message = await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, env.DISCORD_CHANNEL_ID, {
                 embeds: [
                     {
-                        title: `${getFormattedError(item.name)} Alarm`,
+                        title: `Alarm ${alarm.id}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`,
-                        description: alarm.data,
+                        description: `${getFormattedError(item.name)} Alarm\n` + alarm.data,
                         type: "rich",
                         color: 15105570,
                         author: {
                             name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
                             icon_url: "https://ridetracker.app/logo192.png"
-                        },
-                        footer: {
-                            text: `Alarm \`${alarm.id}\``
                         },
                         timestamp: new Date(alarm.started).toISOString()
                     }
@@ -92,20 +89,17 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
 
             await addDiscordThreadMember(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, env.DISCORD_USER_ID);
 
-            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, {
+            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, alarm.threadId, {
                 embeds: [
                     {
-                        title: `${getFormattedError(item.name)} Payload`,
+                        title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`,
-                        description: "```\n" + payload + "\n```",
+                        description: `${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
-                        author: {
-                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png"
-                        },
                         footer: {
-                            text: `Error \`${errorId}\``
+                            text: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            icon_url: "https://ridetracker.app/logo192.png"
                         },
                         timestamp: new Date().toISOString()
                     }
@@ -118,17 +112,14 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
             await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, existingAlarm.threadId, {
                 embeds: [
                     {
-                        title: `${getFormattedError(item.name)} Payload`,
+                        title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`,
-                        description: "```\n" + payload + "\n```",
+                        description: `${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
-                        author: {
-                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
-                            icon_url: "https://ridetracker.app/logo192.png"
-                        },
                         footer: {
-                            text: `Error \`${errorId}\``
+                            text: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                            icon_url: "https://ridetracker.app/logo192.png"
                         },
                         timestamp: new Date().toISOString()
                     }
