@@ -89,12 +89,12 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
 
             await addDiscordThreadMember(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, env.DISCORD_USER_ID);
 
-            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, alarm.threadId, {
+            await createDiscordMessage(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, {
                 embeds: [
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`,
-                        description: `${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `# ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
                         footer: {
@@ -114,7 +114,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`,
-                        description: `${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `# ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
                         footer: {
