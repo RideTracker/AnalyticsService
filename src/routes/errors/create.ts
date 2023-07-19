@@ -67,7 +67,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Alarm ${alarm.id}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}`,
-                        description: `${getFormattedError(item.name)} Alarm\n` + alarm.data,
+                        description: `## ${getFormattedError(item.name)} Alarm\n` + alarm.data,
                         type: "rich",
                         color: 15105570,
                         author: {
@@ -94,11 +94,11 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`,
-                        description: `# ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
-                        footer: {
-                            text: `${service} • ${getFormattedEnvironment(environment)} Environment`,
+                        author: {
+                            name: `${service} • ${getFormattedEnvironment(environment)} Environment`,
                             icon_url: "https://ridetracker.app/logo192.png"
                         },
                         timestamp: new Date().toISOString()
@@ -114,7 +114,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`,
-                        description: `# ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
                         type: "rich",
                         color: 10038562,
                         footer: {
