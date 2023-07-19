@@ -77,7 +77,11 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                 ]
             });
 
+            console.log({ message });
+
             const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, getFormattedError(item.name));
+
+            console.log({ thread });
 
             await addDiscordThreadMember(env.DISCORD_BOT_CLIENT_TOKEN, thread.id, env.DISCORD_USER_ID);
 
