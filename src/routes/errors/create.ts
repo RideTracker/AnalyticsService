@@ -12,6 +12,7 @@ import createError from "../../controllers/errors/createError";
 import getErrors from "../../controllers/errors/getErrors";
 import getFormattedEnvironment from "../../controllers/getFormattedEnvironment";
 import getFormattedError from "../../controllers/getFormattedError";
+import getFormattedPayload from "../../controllers/getFormattedPayload";
 
 export const createErrorSchema = {
     content: {
@@ -94,7 +95,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${alarm.id}/errors/${errorId}`,
-                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + getFormattedPayload(payload) + "\n```",
                         type: "rich",
                         color: 10038562,
                         footer: {
@@ -114,7 +115,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
                     {
                         title: `Error ${errorId}`,
                         url: `https://${(env.ENVIRONMENT === "staging")?("staging."):("")}analytics.ridetracker.app/alarms/${existingAlarm.id}/errors/${errorId}`,
-                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + payload + "\n```",
+                        description: `## ${getFormattedError(item.name)} Payload\n` + "```\n" + getFormattedPayload(payload) + "\n```",
                         type: "rich",
                         color: 10038562,
                         footer: {
