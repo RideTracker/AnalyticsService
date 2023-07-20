@@ -81,7 +81,7 @@ export default async function handleCreateErrorRequest(request: RequestWithKey, 
 
             console.log({ message });
 
-            const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, `Alarm ${alarm.id}`);
+            const thread = await createDiscordThread(env.DISCORD_BOT_CLIENT_TOKEN, message.channel_id, message.id, `Alarm ${alarm.id}`, 60);
             
             console.log({ thread });
 

@@ -1,6 +1,6 @@
 import { DiscordThreadResponse } from "../../../models/DiscordThreadResponse";
 
-export default async function createDiscordThread(token: string, channelId: string, messageId: string, name: string) {
+export default async function createDiscordThread(token: string, channelId: string, messageId: string, name: string, inactivity: 60 | 1440 | 4320 | 10080) {
     const response = await fetch(`https://discord.com/api/v9/channels/${channelId}/messages/${messageId}/threads`, {
         method: "POST",
         headers: {
@@ -8,7 +8,8 @@ export default async function createDiscordThread(token: string, channelId: stri
             "Authorization": `Bot ${token}`
         },
         body: JSON.stringify({
-            name
+            name,
+            auto_archive_duration: inactivity
         })
     });
 
