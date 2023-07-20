@@ -1,6 +1,6 @@
 import { ThrowableRouter, withContent } from "itty-router-extras";
-import withAuth from "../middlewares/withAuth";
 import handleCreateErrorRequest from "../routes/errors/create";
+import { withAuth } from "@ridetracker/authservice/src/middlewares/withAuth";
 
 export default function createRouter() {
     const router = ThrowableRouter();
@@ -14,7 +14,7 @@ export default function createRouter() {
         });
     });
 
-    router.post("/api/error", withAuth, withContent, handleCreateErrorRequest);
+    router.post("/api/error", withAuth("service", "SERVICE_DATABASE"), withContent, handleCreateErrorRequest);
 
     return router;
 };
