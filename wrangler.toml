@@ -20,7 +20,7 @@ id = "e9e05d97db9c4e0f8fa1e3784dc4d0ad"
 [env.staging]
 d1_databases = [
     { binding = "DATABASE", database_name = "ridetracker-analytics-staging", database_id = "65578fe7-4473-4a84-8c0d-9dcdd189dc3d" },
-    { binding = "SERVICE_DATABASE", database_name = "ridetracker-staging", database_id = "361813f2-1a83-4c3d-9df1-204fc7093b6f" }
+    { binding = "SERVICE_DATABASE", database_name = "ridetracker-staging", database_id = "fc97d7d6-9958-4d2c-81d8-6fb6522cd862" }
 ]
 
 [env.staging.vars]
